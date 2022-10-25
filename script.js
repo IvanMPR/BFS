@@ -17,7 +17,7 @@ function createBoard(length) {
   ball3.classList.add('ball');
   start.classList.add('start-field');
   //   end.classList.add('end-field');
-  document.getElementById('20').appendChild(start);
+  document.getElementById('16').appendChild(start);
   //   document.getElementById('4').appendChild(end);
   //   ----------------------------------------- //
   document.getElementById('3').appendChild(ball1);
@@ -46,7 +46,7 @@ function makeList() {
     list[id] = values;
   });
 
-  console.log(list);
+  // console.log(list);
   return list;
 }
 
@@ -66,47 +66,59 @@ function makeList() {
 
 //    return false;
 //  };
+
 const isPath = function (start, end) {
+  const parentArray = [];
   const adjacencyList = makeList();
   const queue = [start];
   const visited = new Set();
-  const parentArray = [];
   while (queue.length > 0) {
     const current = queue.shift();
+    parentArray.push({ parent: current, neighbor: [] });
     // document.getElementById(current).classList.add('visited-field');
     if (visited.has(current)) continue;
     visited.add(current);
-    console.log(visited);
+
     if (current === end) {
-      document.getElementById(current).classList.add('goal');
+      const retrace = arr => {
+        const shortestPath = [end];
+        while (!shortestPath.includes(start)) {
+          const previous = shortestPath[shortestPath.length - 1];
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].parent === start) {
+              shortestPath.push(start);
+              break;
+            }
+            if (
+              arr[i].neighbor.includes(previous) &&
+              arr[i].parent !== previous
+            ) {
+              shortestPath.push(arr[i].parent);
+              break;
+            }
+          }
+          // arr.forEach(obj => {
+          //   if (obj.neighbor.includes(previous)) {
+          //     shortestPath.push(obj.parent);
+          //   }
+          // });
+        }
+        console.log('Shortest path:', shortestPath);
+      };
+      retrace(parentArray);
+      document.getElementById(end).classList.add('goal');
       return true;
     }
 
-    // for (let i = 0; i < adjacencyList[current].length; i++) {
-    //   setTimeout(function timer() {
-    //     console.log(
-    //       'parent: ',
-    //       current,
-    //       'neighbor: ',
-    //       adjacencyList[current][i]
-    //     );
-    //     queue.push(adjacencyList[current][i]);
-    //     parentArray.push([
-    //       `Parent: ${current} - Neighbors:${adjacencyList[current][i]}`,
-    //     ]);
-    //     document
-    //       .getElementById(adjacencyList[current][i])
-    //       .classList.add('visited-field');
-    //   }, i * 1000);
-    // }
     for (let neighbor of adjacencyList[current]) {
-      console.log('parent: ', current, 'neighbor: ', neighbor);
+      parentArray[parentArray.length - 1].neighbor.push(neighbor);
+
+      // console.log('parent: ', current, 'neighbor: ', neighbor);
       queue.push(neighbor);
-      parentArray.push([`Parent: ${current} - Neighbors:${neighbor}`]);
       document.getElementById(neighbor).classList.add('visited-field');
     }
+    console.log(parentArray);
   }
-  console.log(parentArray);
   return false;
 };
 
@@ -127,5 +139,5 @@ container.addEventListener('click', e => {
   const id = e.target.getAttribute('id');
   addActiveClass(id);
   console.log(id);
-  console.log(isPath(20, Number(id)));
+  console.log(isPath(16, Number(id)));
 });

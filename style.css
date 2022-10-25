@@ -74,7 +74,7 @@ h1 {
 }
 .visited-field {
   background-color: rgba(52, 128, 45, 0.2);
-  transition: background-color 0.5s;
+  transition: background-color 1s;
 }
 .goal {
   background-color: rgba(238, 49, 24, 0.2);
