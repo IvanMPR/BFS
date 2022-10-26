@@ -9,10 +9,10 @@ function createBoard(length) {
   container.insertAdjacentHTML('beforeend', markup.trim());
   const start = document.createElement('div');
   const end = document.createElement('div');
-  const ball1 = document.createElement('div');
+  // const ball1 = document.createElement('div');
   const ball2 = document.createElement('div');
   const ball3 = document.createElement('div');
-  ball1.classList.add('ball');
+  // ball1.classList.add('ball');
   ball2.classList.add('ball');
   ball3.classList.add('ball');
   start.classList.add('start-field');
@@ -20,8 +20,8 @@ function createBoard(length) {
   document.getElementById('16').appendChild(start);
   //   document.getElementById('4').appendChild(end);
   //   ----------------------------------------- //
-  document.getElementById('3').appendChild(ball1);
-  document.getElementById('8').appendChild(ball2);
+  // document.getElementById('3').appendChild(ball1);
+  document.getElementById('6').appendChild(ball2);
   document.getElementById('9').appendChild(ball3);
 }
 
@@ -85,10 +85,10 @@ const isPath = function (start, end) {
         while (!shortestPath.includes(start)) {
           const previous = shortestPath[shortestPath.length - 1];
           for (let i = 0; i < arr.length; i++) {
-            if (arr[i].parent === start) {
-              shortestPath.push(start);
-              break;
-            }
+            // if (arr[i].parent === start) {
+            //   shortestPath.push(start);
+            //   break
+            // }
             if (
               arr[i].neighbor.includes(previous) &&
               arr[i].parent !== previous
