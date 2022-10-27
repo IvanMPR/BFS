@@ -22,19 +22,19 @@ h1 {
   margin: 2rem 0;
 }
 .container {
-  width: 51rem;
-  height: 51rem;
+  width: 70rem;
+  height: 70rem;
   /* background-color: orangered; */
   margin: 5rem auto;
   display: grid;
-  gap: 3px;
-  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  grid-template-columns: repeat(10, 1fr);
   grid-template-rows: auto;
   /* border: 1px solid #eee; */
 }
 .field {
-  width: 10rem;
-  height: 10rem;
+  width: 7rem;
+  height: 7rem;
   border: 1px solid #ccc;
   background-color: #fff;
   display: grid;
@@ -48,6 +48,7 @@ h1 {
   top: 5%;
   left: 5%;
   font-size: 1.4rem;
+  display: none;
 }
 
 .start-field,
@@ -81,32 +82,16 @@ h1 {
   transition: background-color 0.5s;
 }
 /* Checkered pattern */
-/* five length grid */
 
-/* .container > .field:nth-child(-2n + 5),
-.container > .field:nth-child(5) ~ div:nth-child(-2n + 9),
-.container > .field:nth-child(10) ~ div:nth-child(-2n + 15),
-.container > .field:nth-child(15) ~ div:nth-child(-2n + 19),
-.container > .field:nth-child(20) ~ div:nth-child(-2n + 25) */
-/* five length grid */
-/* .field > .field:nth-child(50) ~ div:nth-child(-2n + 59),
-.field > .field:nth-child(60) ~ div:nth-child(-2n + 70),
-.field > .field:nth-child(70) ~ div:nth-child(-2n + 79),
-.field > .field:nth-child(80) ~ div:nth-child(-2n + 90),
-.field > .field:nth-child(90) ~ div:nth-child(-2n + 99) 
-*/
-/* {
-  background-color: #fff;
-} */
-/* .board > .field:nth-child(-2n + 10),
-.board > .field:nth-child(10) ~ div:nth-child(-2n + 19),
-.board > .field:nth-child(20) ~ div:nth-child(-2n + 30),
-.board > .field:nth-child(30) ~ div:nth-child(-2n + 39),
-.board > .field:nth-child(40) ~ div:nth-child(-2n + 50),
-.board > .field:nth-child(50) ~ div:nth-child(-2n + 59),
-.board > .field:nth-child(60) ~ div:nth-child(-2n + 70),
-.board > .field:nth-child(70) ~ div:nth-child(-2n + 79),
-.board > .field:nth-child(80) ~ div:nth-child(-2n + 90),
-.board > .field:nth-child(90) ~ div:nth-child(-2n + 99) {
-  background-color: #667;
+/* .container > .field:nth-child(-2n + 10),
+.container > .field:nth-child(10) ~ div:nth-child(-2n + 19),
+.container > .field:nth-child(20) ~ div:nth-child(-2n + 30),
+.container > .field:nth-child(30) ~ div:nth-child(-2n + 39),
+.container > .field:nth-child(40) ~ div:nth-child(-2n + 50),
+.container > .field:nth-child(50) ~ div:nth-child(-2n + 59),
+.container > .field:nth-child(60) ~ div:nth-child(-2n + 70),
+.container > .field:nth-child(70) ~ div:nth-child(-2n + 79),
+.container > .field:nth-child(80) ~ div:nth-child(-2n + 90),
+.container > .field:nth-child(90) ~ div:nth-child(-2n + 99) {
+  background-color: #ddd;
 } */

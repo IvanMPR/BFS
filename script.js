@@ -17,7 +17,7 @@ function createBoard(length) {
   ball3.classList.add('ball');
   start.classList.add('start-field');
   //   end.classList.add('end-field');
-  document.getElementById('16').appendChild(start);
+  document.getElementById('12').appendChild(start);
   //   document.getElementById('4').appendChild(end);
   //   ----------------------------------------- //
   // document.getElementById('3').appendChild(ball1);
@@ -25,7 +25,7 @@ function createBoard(length) {
   document.getElementById('9').appendChild(ball3);
 }
 
-createBoard(5);
+createBoard(10);
 
 function div(divId) {
   return document.getElementById(`${divId}`).innerHTML !== '';
@@ -50,23 +50,6 @@ function makeList() {
   return list;
 }
 
-// makeList();
-// console.log();
-// const hasPath = (graph, src, dst) => {
-//    const queue = [src];
-
-//    while (queue.length) {
-//      const current = queue.shift();
-//      if (current === dst) return true;
-
-//      for (let neighbor of graph[current]) {
-//        queue.push(neighbor);
-//      }
-//    }
-
-//    return false;
-//  };
-
 const isPath = function (start, end) {
   const parentArray = [];
   const adjacencyList = makeList();
@@ -75,7 +58,7 @@ const isPath = function (start, end) {
   while (queue.length > 0) {
     const current = queue.shift();
     parentArray.push({ parent: current, neighbor: [] });
-    // document.getElementById(current).classList.add('visited-field');
+    document.getElementById(current).classList.add('visited-field');
     if (visited.has(current)) continue;
     visited.add(current);
 
@@ -85,10 +68,6 @@ const isPath = function (start, end) {
         while (!shortestPath.includes(start)) {
           const previous = shortestPath[shortestPath.length - 1];
           for (let i = 0; i < arr.length; i++) {
-            // if (arr[i].parent === start) {
-            //   shortestPath.push(start);
-            //   break
-            // }
             if (
               arr[i].neighbor.includes(previous) &&
               arr[i].parent !== previous
@@ -97,11 +76,6 @@ const isPath = function (start, end) {
               break;
             }
           }
-          // arr.forEach(obj => {
-          //   if (obj.neighbor.includes(previous)) {
-          //     shortestPath.push(obj.parent);
-          //   }
-          // });
         }
         console.log('Shortest path:', shortestPath);
       };
@@ -110,14 +84,15 @@ const isPath = function (start, end) {
       return true;
     }
 
+    // for(let i = 0; i < adjacencyList[current].length; i++){
+
+    // }
+
     for (let neighbor of adjacencyList[current]) {
       parentArray[parentArray.length - 1].neighbor.push(neighbor);
-
-      // console.log('parent: ', current, 'neighbor: ', neighbor);
       queue.push(neighbor);
-      document.getElementById(neighbor).classList.add('visited-field');
+      // document.getElementById(neighbor).classList.add('visited-field');
     }
-    console.log(parentArray);
   }
   return false;
 };
@@ -139,5 +114,37 @@ container.addEventListener('click', e => {
   const id = e.target.getAttribute('id');
   addActiveClass(id);
   console.log(id);
-  console.log(isPath(16, Number(id)));
+  console.log(isPath(12, Number(id)));
 });
+// //   // Delay functionality for ball movement
+//   const interval = setInterval(() => {
+//     let i = 0;
+//     document.getElementById(`${array[i]}`).innerHTML = '';
+//     document.getElementById(`${array[i + 1]}`).appendChild(ball);
+//     document.getElementById(`${array[i]}`).classList.remove('path');
+//     i++;
+
+//     array = array.slice(1);
+
+//     if (i === array.length) {
+//       removePathClass();
+//       removeActiveClass();
+//       clearInterval(interval);
+//     }
+//   }, 150);
+// const interval = setInterval(() => {
+//   let i = 0;
+//   let max = adjacencyList[current].length;
+
+//   parentArray[parentArray.length - 1].neighbor.push(
+//     adjacencyList[current][i]
+//   );
+//   queue.push(adjacencyList[current][i]);
+//   document
+//     .getElementById(adjacencyList[current][i])
+//     .classList.add('visited-field');
+
+//   i++;
+
+//   if (i === max) clearInterval(interval);
+// }, 1000);
