@@ -81,6 +81,41 @@ h1 {
   background-color: rgba(238, 49, 24, 0.2);
   transition: background-color 0.5s;
 }
+.generate-path,
+.reset-board {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.hold {
+  outline: 1px solid black;
+  outline-offset: 3px;
+}
+
+.hovered {
+  transform: scale(1.03);
+  border: 1px solid orangered;
+  transition: all 0.3s;
+}
+
+.invisible {
+  /* make this background color same as background color of board fields */
+  background-color: white;
+}
+
+.wall {
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: #888;
+  display: grid;
+}
+
+.red {
+  background-color: orangered;
+}
+.green {
+  background-color: yellowgreen;
+}
 /* Checkered pattern */
 
 /* .container > .field:nth-child(-2n + 10),
