@@ -19,6 +19,7 @@ function shuffle(array) {
 
 const tempObject = {
   currentBall: '',
+  shortestPathFields: [],
   parseClassName(str) {
     if (str === '') return null;
     const ball = str.split(' ')[0];
@@ -88,7 +89,7 @@ function makeList() {
     list[id] = values;
   });
 
-  console.log(list);
+  // console.log(list);
   return list;
 }
 // function is path is main BFS function for traversing the adjacency list
@@ -107,6 +108,7 @@ const isPath = function (start, end) {
     if (current === end) {
       // function retrace gets the shortest path if path is possible and the traversal is finished
       const retrace = arr => {
+        tempObject.shortestPathFields.push(end);
         const shortestPath = [end];
         while (!shortestPath.includes(start)) {
           const previous = shortestPath[shortestPath.length - 1];
@@ -115,14 +117,20 @@ const isPath = function (start, end) {
               arr[i].neighbor.includes(previous) &&
               arr[i].parent !== previous
             ) {
+              tempObject.shortestPathFields.push(arr[i].parent);
               shortestPath.push(arr[i].parent);
               break;
             }
           }
         }
         console.log('Shortest path:', shortestPath);
+        return shortestPath;
       };
-      retrace(parentArray);
+      const path = retrace(parentArray);
+      // retrace(parentArray);
+      setTimeout(() => {
+        drawShortestPath(path);
+      }, 500);
       // document.getElementById(end).classList.add('goal');
       console.log('path yes');
       return true;
@@ -134,11 +142,18 @@ const isPath = function (start, end) {
       // document.getElementById(neighbor).classList.add('visited-field');
     }
   }
-  console.log('no path');
+  alert('It is not possible to create a path');
   return false;
 };
 
-// console.log(isPath(20, 3));
+function drawShortestPath(arr) {
+  const reversed = arr.reverse();
+  for (let i = 0; i < reversed.length; i++) {
+    setTimeout(function colorFields() {
+      document.getElementById(reversed[i]).classList.add('shortest-path');
+    }, i * 100);
+  }
+}
 
 function removeActiveClass() {
   const fields = Array.from(document.querySelectorAll('.field'));
@@ -150,20 +165,14 @@ function addActiveClass(fieldId) {
 }
 
 button.addEventListener('click', () => {
-  // if (e.target.closest('.field').innerHTML !== '') return;
-  // removeActiveClass();
-  // const id = e.target.getAttribute('id');
-  // addActiveClass(id);
-  // console.log(id);
   const startFieldId = Number(
     document.querySelector('.green').closest('.field').id
   );
   const endFieldId = Number(
     document.querySelector('.red').closest('.field').id
   );
-  console.log(startFieldId, endFieldId);
+
   isPath(startFieldId, endFieldId);
-  // isPath(12, Number(id));
 });
 function makeWall(e) {
   // create wall element

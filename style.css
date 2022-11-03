@@ -74,8 +74,8 @@ h1 {
   border: 1px solid orangered;
 }
 .visited-field {
-  background-color: rgba(52, 128, 45, 0.2);
-  transition: background-color 1s;
+  background-color: rgba(220, 228, 109, 0.2);
+  transition: background-color 0.5s;
 }
 .goal {
   background-color: rgba(238, 49, 24, 0.2);
@@ -115,6 +115,11 @@ h1 {
 }
 .green {
   background-color: yellowgreen;
+}
+
+.shortest-path {
+  background-color: lightskyblue;
+  transition: background-color 0.2s;
 }
 /* Checkered pattern */
 
