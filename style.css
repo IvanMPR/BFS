@@ -30,7 +30,7 @@ h1 {
 }
 
 p {
-  font-size: 2.6rem;
+  font-size: 1.6rem;
   font-style: italic;
   padding-bottom: 0.5rem;
   margin: 1rem 0;
@@ -136,28 +136,7 @@ p {
   background-color: lightskyblue;
   transition: background-color 0.2s;
 }
-.modal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(51, 51, 51, 0.7);
-  z-index: 100;
-}
 
-.modal-info {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  height: 40%;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
 /* Checkered pattern */
 
 /* .container > .field:nth-child(-2n + 10),
