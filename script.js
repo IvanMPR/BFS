@@ -38,6 +38,9 @@ function generateInitialRandomStartEndPositions(arr) {
 const container = document.querySelector('.container');
 const button = document.querySelector('.generate-path');
 const resetButton = document.querySelector('.reset-board');
+const infoButton = document.querySelector('.info');
+const body = document.querySelector('body');
+// ---------------------------------------- //
 function createBoard(length) {
   // board creation
   let markup = '';
@@ -195,6 +198,7 @@ function removeWall(e) {
 
   parent.removeChild(child);
 }
+
 container.addEventListener('dblclick', function (e) {
   // console.log(e.target);
   makeWall(e);
@@ -252,36 +256,3 @@ for (let field of allEmptyFields) {
   field.addEventListener('dragleave', dragLeave);
   field.addEventListener('drop', dragDrop);
 }
-
-// //   // Delay functionality for ball movement
-//   const interval = setInterval(() => {
-//     let i = 0;
-//     document.getElementById(`${array[i]}`).innerHTML = '';
-//     document.getElementById(`${array[i + 1]}`).appendChild(ball);
-//     document.getElementById(`${array[i]}`).classList.remove('path');
-//     i++;
-
-//     array = array.slice(1);
-
-//     if (i === array.length) {
-//       removePathClass();
-//       removeActiveClass();
-//       clearInterval(interval);
-//     }
-//   }, 150);
-// const interval = setInterval(() => {
-//   let i = 0;
-//   let max = adjacencyList[current].length;
-
-//   parentArray[parentArray.length - 1].neighbor.push(
-//     adjacencyList[current][i]
-//   );
-//   queue.push(adjacencyList[current][i]);
-//   document
-//     .getElementById(adjacencyList[current][i])
-//     .classList.add('visited-field');
-
-//   i++;
-
-//   if (i === max) clearInterval(interval);
-// }, 1000);

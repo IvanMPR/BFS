@@ -16,16 +16,30 @@ body {
   height: 100vh;
   text-align: center;
   background-color: #f4f4f4;
+  position: relative;
 }
 
 h1 {
   margin: 2rem 0;
 }
+.additional-info {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  /* background-color: rgb(160, 137, 137); */
+}
+
+p {
+  font-size: 2.6rem;
+  font-style: italic;
+  padding-bottom: 0.5rem;
+  margin: 1rem 0;
+}
 .container {
   width: 70rem;
   height: 70rem;
   /* background-color: orangered; */
-  margin: 5rem auto;
+  margin: 2rem auto 3rem;
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(10, 1fr);
@@ -82,7 +96,8 @@ h1 {
   transition: background-color 0.5s;
 }
 .generate-path,
-.reset-board {
+.reset-board,
+.info {
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
@@ -120,6 +135,28 @@ h1 {
 .shortest-path {
   background-color: lightskyblue;
   transition: background-color 0.2s;
+}
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(51, 51, 51, 0.7);
+  z-index: 100;
+}
+
+.modal-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 /* Checkered pattern */
 
