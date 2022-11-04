@@ -22,6 +22,12 @@ body {
 h1 {
   margin: 2rem 0;
 }
+.additional-info {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  /* background-color: rgb(160, 137, 137); */
+}
 
 p {
   font-size: 1.6rem;
@@ -32,13 +38,14 @@ p {
 .container {
   width: 70rem;
   height: 70rem;
+  /* background-color: orangered; */
   margin: 2rem auto 3rem;
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: auto;
+  /* border: 1px solid #eee; */
 }
-
 .field {
   width: 7rem;
   height: 7rem;
@@ -55,7 +62,7 @@ p {
   top: 5%;
   left: 5%;
   font-size: 1.4rem;
-  /* comment out display:none in order to visualize field id-s*/
+  /* comment display:none in order to visualize field id-s*/
   display: none;
 }
 
@@ -78,19 +85,24 @@ p {
   border-radius: 50%;
   background-color: lightblue;
 }
-
+.active {
+  border: 1px solid orangered;
+}
 .visited-field {
-  background-color: rgba(143, 228, 109, 0.2);
+  background-color: rgba(220, 228, 109, 0.2);
   transition: background-color 0.5s;
 }
-/* buttons */
+.goal {
+  background-color: rgba(238, 49, 24, 0.2);
+  transition: background-color 0.5s;
+}
 .generate-path,
 .reset-board,
 .info {
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
-/* drag-functionality classes */
+
 .hold {
   outline: 1px solid black;
   outline-offset: 3px;

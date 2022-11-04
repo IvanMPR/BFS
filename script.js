@@ -49,10 +49,6 @@ const button = document.querySelector('.generate-path');
 const resetButton = document.querySelector('.reset-board');
 const infoButton = document.querySelector('.info');
 const body = document.querySelector('body');
-const startEndFields = document.querySelectorAll('.ball');
-const allEmptyFields = Array.from(document.querySelectorAll('.field')).filter(
-  field => field.innerHTML === ''
-);
 
 //* Create board *//
 
@@ -235,6 +231,10 @@ resetButton.addEventListener('click', () => {
   location.reload();
 });
 //** Drag/drop functions and listeners  **/
+const startEndFields = document.querySelectorAll('.ball');
+const allEmptyFields = Array.from(document.querySelectorAll('.field')).filter(
+  field => field.innerHTML === ''
+);
 
 function dragStart() {
   const getClass = this.getAttribute('class');
