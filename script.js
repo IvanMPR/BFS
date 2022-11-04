@@ -133,20 +133,25 @@ const isPath = function (start, end) {
       // retrace function is called with parentArray as an argument
       // function retrace gets the shortest path if path is possible and the traversal is finished
       const retrace = arr => {
+        // we start with the end field
         const shortestPath = [end];
+        // and loop backwards until we reach start field
         while (!shortestPath.includes(start)) {
+          // we pick last element in the arr, call it previous
           const previous = shortestPath[shortestPath.length - 1];
+          // loop trough his neighbors(children)
           for (let i = 0; i < arr.length; i++) {
             if (
               arr[i].neighbors.includes(previous) &&
               arr[i].parent !== previous
             ) {
+              // and push previous parent in shortest path if above conditions are met
               shortestPath.push(arr[i].parent);
               break;
             }
           }
         }
-
+        // return shortest path
         return shortestPath;
       };
       // variable path now holds shortest path fields ids
