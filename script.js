@@ -1,5 +1,5 @@
-// helper function for array shuffling
-// Fisher - Yates shuffle
+//**  helper function for array shuffling  **/
+//* Fisher - Yates shuffle *//
 function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -17,30 +17,45 @@ function shuffle(array) {
   return array;
 }
 
+//* Helper function, returning boolean, depending if the passed divId is empty or includes the end field *//
+
+function div(divId) {
+  // used in a makeList function to determine if neighbor field can be considered empty
+  const div = document.getElementById(`${divId}`);
+  return div.innerHTML === '' || div.querySelector('.red') !== null;
+}
+
+//* Temporary storage object  *//
 const tempObject = {
   currentBall: '',
-  shortestPathFields: [],
   parseClassName(str) {
     if (str === '') return null;
     const ball = str.split(' ')[0];
     return ball === 'green' ? this.greenBall : this.redBall;
   },
 };
+//* Nicely named function for generating random empty fields, for initial start/end placement *//
 
-// random initial placement of start and end fields
 function generateInitialRandomStartEndPositions(arr) {
   const shuffled = shuffle(arr);
   const start = shuffled[0];
   const end = shuffled[shuffled.length - 1];
   return [Number(start), Number(end)];
 }
-// create board and start/end fields
+//* Elements selection *//
+
 const container = document.querySelector('.container');
 const button = document.querySelector('.generate-path');
 const resetButton = document.querySelector('.reset-board');
 const infoButton = document.querySelector('.info');
 const body = document.querySelector('body');
-// ---------------------------------------- //
+const startEndFields = document.querySelectorAll('.ball');
+const allEmptyFields = Array.from(document.querySelectorAll('.field')).filter(
+  field => field.innerHTML === ''
+);
+
+//* Create board *//
+
 function createBoard(length) {
   // board creation
   let markup = '';
@@ -58,98 +73,109 @@ function createBoard(length) {
   const positions = generateInitialRandomStartEndPositions(allFields);
   // create start ball, pass it to temp object, attach it to first random position
   const start = document.createElement('div');
-  start.classList.add('green', 'ball', 'ball-start');
+  start.classList.add('green', 'ball');
   start.setAttribute('draggable', true);
   tempObject.greenBall = start;
   document.getElementById(`${positions[0]}`).appendChild(start);
   // create end ball, pass it to temp object, attach it to second random position
   const end = document.createElement('div');
   end.setAttribute('draggable', true);
-  end.classList.add('red', 'ball', 'ball-end');
+  end.classList.add('red', 'ball');
   tempObject.redBall = end;
   document.getElementById(`${positions[1]}`).appendChild(end);
 }
 
 createBoard(10);
-// helper function, returning boolean, depending if the passed divId is empty or includes the end field
-function div(divId) {
-  const div = document.getElementById(`${divId}`);
-  return div.innerHTML === '' || div.querySelector('.red') !== null;
-}
-// makeList function creates adjacency list for traversing for shortest path
+
+//* makeList function creates an adjacency list of all fields on the board*//
+
 function makeList() {
   const list = {};
   const gameFields = Array.from(document.querySelectorAll('.field'));
   gameFields.forEach(field => {
+    // traversing every field, check his neighbor fields, if they are empty, add them to adj. list
     const id = Number(field.getAttribute('id'));
-
+    // logic for determining are neighbors empty
     const up = id < 10 || id - 10 < 0 || !div(id - 10) ? false : id - 10;
     const down = id >= 90 || id + 10 > 99 || !div(id + 10) ? false : id + 10;
     const left = id % 10 === 0 || id - 1 < 0 || !div(id - 1) ? false : id - 1;
     const right = id % 10 === 9 || id + 1 > 99 || !div(id + 1) ? false : id + 1;
-
+    // filter for only empty fields, occupied fields will show as false in the values array
     const values = [up, down, left, right].filter(el => el !== false);
+    // create new entry in the list object for every field. example: 11 : [1, 21, 10, 12] . field is 11 and his neighbor fields are those in the arr
     list[id] = values;
   });
-
-  // console.log(list);
+  // return complete list
   return list;
 }
-// function is path is main BFS function for traversing the adjacency list
+
+//**  function isPath is main BFS function for traversing the adjacency list  **//
+
 const isPath = function (start, end) {
+  // all parents of the adj.list are stored in parentArray, from here shortest path is retraced
   const parentArray = [];
+  // adjacency list
   const adjacencyList = makeList();
+  // BFS queue
   const queue = [start];
+  // visited set stores visited fields, preventing infinite looping
   const visited = new Set();
+  // BFS algorithm
   while (queue.length > 0) {
     const current = queue.shift();
-    parentArray.push({ parent: current, neighbor: [] });
+    // for every current field, an object is created with current as a parent, and an empty array for its neighbors. Array is filled later in the code with current neighbors
+    parentArray.push({ parent: current, neighbors: [] });
+    // adding visited class to every current field
     document.getElementById(current).classList.add('visited-field');
+    // go to next iteration if current has already been visited
     if (visited.has(current)) continue;
+    // else, add current to visited set and continue algo
     visited.add(current);
-
+    // if match is found, current === to end field
     if (current === end) {
+      // call retrace fn
+      // retrace function is called with parentArray as an argument
       // function retrace gets the shortest path if path is possible and the traversal is finished
       const retrace = arr => {
-        tempObject.shortestPathFields.push(end);
         const shortestPath = [end];
         while (!shortestPath.includes(start)) {
           const previous = shortestPath[shortestPath.length - 1];
           for (let i = 0; i < arr.length; i++) {
             if (
-              arr[i].neighbor.includes(previous) &&
+              arr[i].neighbors.includes(previous) &&
               arr[i].parent !== previous
             ) {
-              tempObject.shortestPathFields.push(arr[i].parent);
               shortestPath.push(arr[i].parent);
               break;
             }
           }
         }
-        console.log('Shortest path:', shortestPath);
+
         return shortestPath;
       };
+      // variable path now holds shortest path fields ids
       const path = retrace(parentArray);
-      // retrace(parentArray);
+      // drawing shortest path
       setTimeout(() => {
         drawShortestPath(path);
       }, 500);
-      // document.getElementById(end).classList.add('goal');
-      console.log('path yes');
+
       return true;
     }
-
+    // continuation of BFS algo, if match is not found...we pass its neighbors to the queue and parentArray
     for (let neighbor of adjacencyList[current]) {
-      parentArray[parentArray.length - 1].neighbor.push(neighbor);
+      parentArray[parentArray.length - 1].neighbors.push(neighbor);
       queue.push(neighbor);
-      // document.getElementById(neighbor).classList.add('visited-field');
     }
   }
+  // if path creation is impossible, alert will trigger
   alert('It is not possible to create a path');
   return false;
 };
 
+//** Draw path  **/
 function drawShortestPath(arr) {
+  // reverse arr, so the start of the shortest path drawing begins from green field(start). retrace function returns shortest path from the end, traces backward
   const reversed = arr.reverse();
   for (let i = 0; i < reversed.length; i++) {
     setTimeout(function colorFields() {
@@ -158,25 +184,8 @@ function drawShortestPath(arr) {
   }
 }
 
-function removeActiveClass() {
-  const fields = Array.from(document.querySelectorAll('.field'));
-  return fields.forEach(field => field.classList.remove('active'));
-}
+//** Functions to create and remove obstacles on the board  **/
 
-function addActiveClass(fieldId) {
-  document.getElementById(fieldId).classList.add('active');
-}
-
-button.addEventListener('click', () => {
-  const startFieldId = Number(
-    document.querySelector('.green').closest('.field').id
-  );
-  const endFieldId = Number(
-    document.querySelector('.red').closest('.field').id
-  );
-
-  isPath(startFieldId, endFieldId);
-});
 function makeWall(e) {
   // create wall element
   const wall = document.createElement('div');
@@ -198,23 +207,35 @@ function removeWall(e) {
 
   parent.removeChild(child);
 }
+//*** Event listeners and drag/drop functionality  ***/
 
-container.addEventListener('dblclick', function (e) {
-  // console.log(e.target);
+//** call isPath function with ids of the start ball and end ball fields   **/
+button.addEventListener('click', () => {
+  const startFieldId = Number(
+    document.querySelector('.green').closest('.field').id
+  );
+  const endFieldId = Number(
+    document.querySelector('.red').closest('.field').id
+  );
+
+  isPath(startFieldId, endFieldId);
+});
+
+//** Make walls, event delegation  **/
+container.addEventListener('dblclick', e => {
   makeWall(e);
 });
-container.addEventListener('dblclick', function (e) {
+
+//** Remove walls, event delegation   **/
+container.addEventListener('dblclick', e => {
   removeWall(e);
 });
-
+//** Restart board **/
 resetButton.addEventListener('click', () => {
   location.reload();
 });
+//** Drag/drop functions and listeners  **/
 
-const startEndFields = document.querySelectorAll('.ball');
-const allEmptyFields = Array.from(document.querySelectorAll('.field')).filter(
-  field => field.innerHTML === ''
-);
 function dragStart() {
   const getClass = this.getAttribute('class');
   tempObject.currentBall = getClass;
