@@ -138,6 +138,11 @@ p {
   background-color: lightskyblue;
   transition: background-color 0.2s;
 }
+@media (max-width: 1368px) {
+  html {
+    font-size: 50%;
+  }
+}
 
 /* Checkered pattern */
 
