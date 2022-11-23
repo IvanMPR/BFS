@@ -1,7 +1,7 @@
 # Breadth first search and shortest path algorithm
 <br>
 <br>
-Hello, this is a small project created with newly aquired skills about basic searching algorithms. 
+Hello,<a href="https://ivanmpr.github.io/BFS/"> this</a> is a small project created with newly aquired skills about basic searching algorithms. 
 Few images and one gif file below.
 <br>
 <br>
